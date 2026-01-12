@@ -1,0 +1,252 @@
+index.html
+let can = 10;
+let lastLavaTime = 0;
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>M-NECRAFT</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <style>
+    body { margin:0; overflow:hidden; background:#222; }
+  </style>
+</head>
+<body>
+<script>
+let p={x:0,y:0,z:0,vz:0,s:5,dir:1,step:0};
+let cx=0,cy=0;
+
+function setup(){
+  createCanvas(windowWidth,windowHeight);
+}
+
+function draw(){
+  background(90,180,90);
+
+  cx=p.x-width/2;
+  cy=p.y-height/2;
+
+  push();
+  translate(-cx,-cy);
+
+  stroke(70,160,70);
+  for(let x=-2000;x<2000;x+=100) line(x,-2000,x,2000);
+  for(let y=-2000;y<2000;y+=100) line(-2000,y,2000,y);
+
+  let m=false;
+  if(keyIsDown(65)||keyIsDown(37)){p.x-=p.s;p.dir=-1;m=true;}
+  if(keyIsDown(68)||keyIsDown(39)){p.x+=p.s;p.dir=1;m=true;}
+  if(keyIsDown(87)||keyIsDown(38)){p.y-=p.s;m=true;}
+  if(keyIsDown(83)||keyIsDown(40)){p.y+=p.s;m=true;}
+  if(m)p.step+=0.15; else p.step=0;
+for(let i=blocks.length-1;i>=0;i--){
+  let b = blocks[i];
+
+  // 3D GÖLGE
+  fill(0,0,0,80);
+  rect(b.x+6, b.y+6, b.w, b.h, 6);
+
+  // RENK
+  if(b.type=="normal") fill(100,180,255);
+  if(b.type=="break")  fill(255,180,100);
+  if(b.type=="lava")   fill(255,80,0);
+
+  rect(b.x, b.y, b.w, b.h, 6);
+
+  // ÜSTÜNE BASMA
+  if(
+    p.x > b.x && p.x < b.x+b.w &&
+    p.y+10 >= b.y && p.y+10 <= b.y+b.h &&
+    p.z <= 0
+  ){
+    p.y = b.y-10;
+    p.vz = 0;
+
+    // KIRILAN BLOK
+    if(b.type=="break"){
+      b.hp--;
+      if(b.hp<=0){
+        blocks.splice(i,1);
+      }
+    }
+
+    // LAVA HASARI (15 SANİYEDE YARIM CAN)
+    if(b.type=="lava"){
+      if(millis()-lastLavaTime > 15000){
+        can -= 0.5;
+        lastLavaTime = millis(fill(255,0,0);
+textSize(20);
+text("❤ CAN: "+can, 20, 30);
+);
+      }
+    }
+  }
+}
+
+  p.z+=p.vz;
+  if(p.z>0)p.vz-=0.8;
+  else{p.z=0;p.vz=0;}
+  if(keyIsDown(32)&&p.z==0)p.vz=12;
+// BLOKLAR
+let blocks = [// BLOKLARI ÇİZ
+for(let b of blocks){
+  fill(b.c[0], b.c[1], b.c[2], b.c[3]);
+  noStroke();
+  rect(b.x, b.y, b.w, b.h, 6);
+
+  if(
+    p.x > b.x && p.x < b.x + b.w &&
+    p.y + 10 >= b.y && p.y + 10 <= b.y + b.h &&
+    p.z <= 0
+  ){
+    p.y = b.y - 10;
+    p.vz = 0;
+  }
+}
+
+  {x:200, y:200, w:80, h:30, c:[255,0,0,255]},     // Kırmızı
+  {x:300, y:200, w:80, h:30, c:[0,255,0,255]},     // Yeşil
+  {x:400, y:200, w:80, h:30, c:[0,0,255,255]},     // Mavi
+  {x:500, y:200, w:80, h:30, c:[255,255,0,255]},   // Sarı
+  {x:600, y:200, w:80, h:30, c:[255,0,255,255]},   // Mor
+  {x:700, y:200, w:80, h:30, c:[0,255,255,255]},   // Camgöbeği
+  {x:800, y:200, w:80, h:30, c:[255,255,255,100]}  // ŞEFFAF
+];
+ 
+
+  noStroke();
+  fill(0,0,0,70);
+  ellipse(p.x,p.y,40-p.z/6);
+
+  let yy=p.y-p.z;
+  let leg=sin(p.step)*6;
+
+  push();
+  translate(p.x,yy);
+  scale(p.dir,1);
+
+  fill(70);
+  rect(-10+leg,-5,8,22,4);
+  rect(2-leg,-5,8,22,4);
+
+  fill(90,130,220);
+  rect(-14,-40,28,30,6);
+
+  fill(255,220,180);
+  rect(-12,-65,24,25,6);
+
+  fill(0);
+  ellipse(-5,-55,4);
+  ellipse(5,-55,4);
+  rect(-4,-48,8,3,2);
+
+  pop();
+  pop();
+
+  fill(255);
+  textSize(16);
+  text("WASD / Oklar: Hareket | Boşluk: Zıpla",20,30);
+}
+
+function windowResized(){
+  resizeCanvas(windowWidth,windowHeight);
+}
+<let blocks = [
+  {x:200,y:260,w:80,h:30,type:"normal",hp:999},
+  {x:300,y:260,w:80,h:30,type:"break",hp:3},
+  {x:400,y:260,w:80,h:30,type:"break",hp:2},
+  {x:500,y:260,w:80,h:30,type:"lava",hp:999}
+];let blocks = [
+  {x:200,y:260,w:80,h:30,type:"normal"},
+  {x:300,y:260,w:80,h:30,type:"break",hold:0},
+  {x:400,y:260,w:80,h:30,type:"break",hold:0},
+  {x:500,y:260,w:80,h:30,type:"lava"}
+];(if(
+  p.x > b.x && p.x < b.x+b.w &&
+  p.y+10 >= b.y && p.y+10 <= b.y+b.h &&
+  p.z <= 0
+){
+  p.y = b.y-10;
+  p.vz = 0;
+
+  // 🔨 KIRILAN BLOK (1 SANİYE)
+  if(b.type=="break"){
+    b.hold += deltaTime;
+
+    if(b.hold >= 1000){
+      blocks.splice(i,1);
+    }
+  }
+
+  // 🔥 LAVA
+  if(b.type=="lava"){
+    if(millis()-lastLavaTime > 15000){
+      can -= 0.5;
+      lastLavaTime = millis();
+    }
+  }
+}
+else{
+  // üstünde değilse süre sıfırlanır
+  if(b.type=="break"){
+    b.hold = 0;
+  }
+}
+)let breakSound, lavaSound;
+function preload(){
+  breakSound = loadSound("https://cdn.jsdelivr.net/gh/jakesgordon/javascript-breakout/sounds/brick.wav");
+  lavaSound  = loadSound("https://cdn.jsdelivr.net/gh/jakesgordon/javascript-breakout/sounds/death.wav");
+}
+if(millis()-lastLavaTime > 15000){
+  can -= 0.5;
+  lavaSound.play();
+  lastLavaTime = millis();
+}
+function drawPlayer(){
+  push();
+  translate(p.x, p.y, p.z);
+
+  // GÖVDE
+  fill(0,150,255);
+  box(25,35,15);
+
+  // KAFA
+  push();
+  translate(0,-30,0);
+  fill(255,220,180);
+  box(22,22,22);
+  pop();
+
+  // BACAKLAR
+  push();
+  translate(-6,25,0);
+  fill(50);
+  box(8,20,8);
+  pop();
+
+  push();
+  translate(6,25,0);
+  fill(50);
+  box(8,20,8);
+  pop();
+
+  pop();
+}
+(drawPlayer(background(135, 206, 235); // Açık mavi gökyüzü
+);
+)push();
+translate(0, height/2 + 40, 0);
+fill(34, 139, 34); // Koyu yeşil zemin
+box(width, 80, 200);
+pop();
+// BLOKLAR
+let blocks = [
+ {x:200,y:200,w:80,h:30,c:[60,180,75]},   // Açık yeşil
+ {x:300,y:200,w:80,h:30,c:[46,139,87]},   // Deniz yeşili
+ {x:400,y:200,w:80,h:30,c:[0,128,0]},     // Koyu yeşil
+ {x:500,y:200,w:80,h:30,c:[34,139,34]},   // Orman yeşili
+ {x:600,y:200,w:80,h:30,c:[107,142,35]}   // Zeytin yeşili
+];
+
+
+
